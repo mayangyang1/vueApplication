@@ -1,7 +1,7 @@
 <template>
     <div class="list-builder">
         <van-pull-refresh v-model="refresh" @refresh="onRefresh">
-            <van-list :immediate-check="false" v-model="loading" :finished="finished" :offset="100" finished-text="没有更多了" @load="onLoad">
+            <van-list :immediate-check="false" v-model="loading" :finished="isFinished" :offset="100" finished-text="没有更多了" @load="onLoad">
                 <slot></slot>
             </van-list>
         </van-pull-refresh>
@@ -13,9 +13,16 @@ import {List, Cell, PullRefresh,} from 'vant'
 export default {
     data() {
         return {
-            loading: this.isLoading,
-            finished: this.isFinished,
             refresh: this.isRefresh,
+            loading: this.isLoading,
+        }
+    },
+    watch: {
+        isRefresh(val){
+            this.refresh = val;
+        },
+        isLoading(val) {
+            this.loading = val;
         }
     },
     props:{
@@ -31,23 +38,6 @@ export default {
             type: Boolean,
             default: false,
         },
-    },
-    watch:{
-        isLoading(newVal, oldVal) {
-            if(newVal != oldVal) {
-                this.loading = this.isLoading;
-            }
-        },
-        isRefresh(newVal, oldVal) {
-            if(newVal != oldVal) {
-                this.refresh = this.isRefresh;
-            }
-        },
-        isFinished(newVal, oldVal) {
-            if(newVal != oldVal) {
-                this.finished = this.isFinished;
-            }
-        }
     },
     components: {
         [List.name] : List,

@@ -18,6 +18,12 @@
         <div class="common-btn main-bg-color white" @click="login"> 登录</div>
       </van-col>
     </van-row>
+    <van-row type="flex" justify="space-between">
+      <van-col offset="3" span="3" class="mgt10 regiest">
+        <div @click="regiest">注册</div>
+      </van-col>
+    </van-row>
+    
   </div>
 </template>
 
@@ -45,7 +51,7 @@ export default {
         return Toast.fail('用户名和密码不为空');
       }
       this.$axios.post('/api/login', {
-        name: this.userName,
+        phone: this.userName,
         password: this.password
       }).then( res => {
         if(res.code === 200) {
@@ -56,6 +62,10 @@ export default {
           Toast.fail(res.content);
         }
       })
+    },
+    regiest() {
+      console.log('注册')
+      this.$router.push('/regiest');
     }
   }
 }
@@ -67,6 +77,10 @@ export default {
   }
   .mgt40{
     margin-top: 40px;
+  }
+  .regiest{
+    text-align: left;
+    color: #888;
   }
 </style>
 

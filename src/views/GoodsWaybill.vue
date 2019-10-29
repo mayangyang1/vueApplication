@@ -57,20 +57,25 @@ export default {
             this.$axios.get(`/api/getGoodsWaybillList?page=${this.page}&size=${this.size}`).then(success);
         },
         onLoad() {
-            this.loading = true;
-            if(this.page === 1) {
+            const that = this;
+            if(that.page == 1){
                 return;
             }
-            this.getGoodsWaybill(res => {
+            that.loading = true;
+            that.getGoodsWaybill(res => {
+                 that.loading = false;
                 if(res.code === 200 && res.content.length > 0){
-                    this.page ++;
-                    this.goodsWaybillList.concat(res.content);
-                    this.loading = false;
+                    that.page ++;
+                    that.goodsWaybillList = that.goodsWaybillList.concat(res.content);
+                }
+                if(res.content.length == 0) {
+                    that.finished = true;
                 }
             })
         },
         onRefresh() {
             this.isLoading = true;
+            this.finished = false;
             this.page = 1;
             this.getGoodsWaybill(res => {
                 if(res.code === 200){
@@ -83,7 +88,7 @@ export default {
         }
     },
     created() {
-        // this.onLoad()
+        this.onLoad()
         this.page = 1;
         this.goodsWaybillList = [];
         this.getGoodsWaybill(res => {

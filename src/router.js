@@ -38,6 +38,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/LoginPage.vue')
     },
     {
+      path: '/regiest',
+      name: 'regiest',
+      component: () => import('./views/RegiestPage.vue')
+    },
+    {
       path: '/newGoodsWaybill',
       name: 'newGoodsWaybill',
       component: () => import('./views/AddGoodsWaybill.vue')
